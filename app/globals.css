@@ -1,8 +1,5 @@
 @import "tailwindcss";
 
-:root {
-  
-}
 
 @theme inline {
   --color-slate-900: #0F172A;
@@ -22,9 +19,11 @@
   --color-amber-800: #92400E;
 
   --color-grey-50: #F9FAFB;
+
+  --font-nanumsquare: var(--font-nanumsquare);
 }
 
 body {
   background: var(--color-grey-50);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-nanumsquare);
 }

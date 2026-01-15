@@ -1,5 +1,29 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
+
 import "./globals.css";
+
+const nanumsquare = localFont({
+  src: [
+    {
+      path: "../public/fonts/NanumSquareB.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/NanumSquarEB.woff2",
+      weight: "800",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/NanumSquareR.woff2",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-nanumsquare",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Sprint To-Do List",
@@ -12,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko" className={`${nanumsquare.variable}`}>
       <body>{children}</body>
     </html>
   );
