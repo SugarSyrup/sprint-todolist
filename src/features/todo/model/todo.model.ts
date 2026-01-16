@@ -16,3 +16,5 @@ export interface updateTodoRequest {
   imageUrl: TodoDetail["imageUrl"];
   isCompleted: TodoDetail["isCompleted"];
 }
+
+export type TodoType = "todo" | "done";

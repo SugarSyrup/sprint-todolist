@@ -1,7 +1,7 @@
-import { Todo } from "../model/todo.model";
+import { Todo, TodoType } from "../model/todo.model";
 
 export function groupTodoList(data: Todo[]) {
-  const groupMap: Record<"todo" | "done", Todo[]> = {
+  const groupMap: Record<TodoType, Todo[]> = {
     todo: [],
     done: [],
   };
