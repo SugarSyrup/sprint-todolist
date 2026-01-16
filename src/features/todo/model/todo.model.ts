@@ -11,10 +11,10 @@ export interface TodoDetail extends Todo {
 }
 
 export interface updateTodoRequest {
-  name: TodoDetail["name"];
-  memo: TodoDetail["memo"];
-  imageUrl: TodoDetail["imageUrl"];
-  isCompleted: TodoDetail["isCompleted"];
+  name?: TodoDetail["name"];
+  memo?: TodoDetail["memo"];
+  imageUrl?: TodoDetail["imageUrl"];
+  isCompleted?: TodoDetail["isCompleted"];
 }
 
 export type TodoType = "todo" | "done";

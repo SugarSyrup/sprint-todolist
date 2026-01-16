@@ -2,7 +2,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { getTodoList } from "../api/todo.api";
 import { groupTodoList } from "../utils/groupTodoList";
 
-const todoListQueryKey = ["todolist"];
+export const todoListQueryKey = ["todolist"];
 
 export function useTodoListQuery() {
   return useSuspenseQuery({
