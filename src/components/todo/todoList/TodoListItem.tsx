@@ -2,9 +2,12 @@ import { ReactNode } from "react";
 import Image from "next/image";
 import classNames from "classnames";
 
-import { TodoType } from "@/src/features/todo/model/todo.model";
+import { Todo, TodoType } from "@/src/features/todo/model/todo.model";
+import { updateTodo } from "@/src/features/todo/api/todo.api";
+import { useChangeTodoStateMutation } from "@/src/features/todo/hooks/useChangeTodoStateMutation";
 
 interface Props {
+  id: Todo["id"];
   type: TodoType;
   children: ReactNode;
 }
@@ -14,7 +17,11 @@ const colorMap = {
   done: "bg-violet-100",
 };
 
-export function TodoListItem({ type, children }: Props) {
+export function TodoListItem({ id, type, children }: Props) {
+  const isCompleted = type === "done";
+
+  const { mutate: changeTodoStateMutate } = useChangeTodoStateMutation();
+
   return (
     <li
       className={classNames(
@@ -27,6 +34,9 @@ export function TodoListItem({ type, children }: Props) {
         alt="todolist-item-check-icon"
         width="32"
         height="32"
+        onClick={() => {
+          changeTodoStateMutate({ id, isCompleted: !isCompleted });
+        }}
       />
 
       <span
