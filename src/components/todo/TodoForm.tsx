@@ -18,6 +18,8 @@ export function TodoForm() {
     });
   }
 
+  const hasInputValue = value.length > 0;
+
   return (
     <form
       className="w-full flex justify-center items-center gap-1 shrink-0"
@@ -41,17 +43,22 @@ export function TodoForm() {
       </div>
 
       <Button
-        color="slate"
+        color={hasInputValue ? "violet" : "slate"}
         leftIcon={
           <Image
-            src="/icons/plus-slate-900.svg"
+            src={
+              hasInputValue
+                ? "/icons/plus-white.svg"
+                : "/icons/plus-slate-900.svg"
+            }
             alt="todoform-submit-btn-icon"
             width={16}
             height={16}
           />
         }
+        className="inline sm:flex"
       >
-        추가하기
+        <span className="hidden sm:inline-block">추가하기</span>
       </Button>
     </form>
   );

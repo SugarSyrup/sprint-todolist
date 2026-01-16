@@ -9,7 +9,7 @@ type Props = PropsWithChildren<{
   className?: string;
   onClick?: React.MouseEventHandler<HTMLElement>;
   disabled?: boolean;
-  children: string;
+  children: string | ReactNode;
 }>;
 
 const buttonColorMap: Record<Props["color"], string> = {
