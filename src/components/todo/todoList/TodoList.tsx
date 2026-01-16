@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { useTodoListQuery } from "@/src/features/todo/hooks/useTodoListQuery";
+
 import { Loading } from "./Loading";
 import { Error } from "./Error";
 import { TodoListItem } from "./TodoListItem";
@@ -20,7 +21,9 @@ export function TodoList() {
           height="36"
         />
         {todoStateList.map((todo) => (
-          <TodoListItem key={todo.id}>{todo.name}</TodoListItem>
+          <TodoListItem type="todo" key={todo.id}>
+            {todo.name}
+          </TodoListItem>
         ))}
       </ul>
 
@@ -32,7 +35,9 @@ export function TodoList() {
           height="36"
         />
         {doneStateList.map((todo) => (
-          <TodoListItem key={todo.id}>{todo.name}</TodoListItem>
+          <TodoListItem type="done" key={todo.id}>
+            {todo.name}
+          </TodoListItem>
         ))}
       </ul>
     </div>
