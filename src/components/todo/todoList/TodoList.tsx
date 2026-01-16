@@ -32,7 +32,7 @@ export function TodoList() {
         )}
 
         {todoStateList.map((todo) => (
-          <TodoListItem type="todo" key={todo.id}>
+          <TodoListItem type="todo" key={todo.id} id={todo.id}>
             {todo.name}
           </TodoListItem>
         ))}
@@ -53,7 +53,7 @@ export function TodoList() {
         )}
 
         {doneStateList.map((todo) => (
-          <TodoListItem type="done" key={todo.id}>
+          <TodoListItem type="done" key={todo.id} id={todo.id}>
             {todo.name}
           </TodoListItem>
         ))}
