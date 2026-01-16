@@ -33,13 +33,13 @@ export function Button({
       <button
         className={classNames(
           buttonColorMap[color],
-          `relative min-w-[56px] h-[56px] px-[18px] py-[18px] flex gap-1 justify-center items-center border-2 border-slate-900 rounded-3xl `,
+          `relative min-w-[56px] h-[56px] px-[18px] py-[18px] flex gap-1 justify-center items-center border-2 border-slate-900 rounded-3xl font-bold cursor-pointer`,
           className
         )}
         {...rest}
       >
         {leftIcon}
-        <span className="button__content">{children}</span>
+        <span>{children}</span>
         {rightIcon}
       </button>
     </div>

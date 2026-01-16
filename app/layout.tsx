@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
-import { GNB } from "@/src/components/GNB";
+import { GNB } from "@/src/components/common/GNB";
 
 import "./globals.css";
+import Providers from "./providers";
 
 const nanumsquare = localFont({
   src: [
@@ -42,8 +43,10 @@ export default function RootLayout({
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
       <body>
-        <GNB />
-        {children}
+        <Providers>
+          <GNB />
+          {children}
+        </Providers>
       </body>
     </html>
   );
