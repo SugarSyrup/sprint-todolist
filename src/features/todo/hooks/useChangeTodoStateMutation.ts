@@ -22,11 +22,16 @@ export function useChangeTodoStateMutation() {
     onMutate: async ({ id, isCompleted }) => {
       await queryClient.cancelQueries({ queryKey: todoListQueryKey });
 
-      const prevTodoRecordSnapshot = queryClient.getQueryData(todoListQueryKey);
+      const prevTodoListRecordSnapshot =
+        queryClient.getQueryData(todoListQueryKey);
 
       queryClient.setQueryData(
         todoListQueryKey,
-        (prevTodoRecord: Record<TodoType, Todo[]>) => {
+        (prevTodoRecord: Record<TodoType, Todo[]> | undefined) => {
+          if (!prevTodoRecord) {
+            return { todo: [], done: [] };
+          }
+
           if (isCompleted) {
             prevTodoRecord["todo"] = changeTodoState(
               prevTodoRecord["todo"],
@@ -43,17 +48,19 @@ export function useChangeTodoStateMutation() {
         }
       );
 
-      return { prevTodoRecordSnapshot };
+      return { prevTodoListRecordSnapshot };
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: todoListQueryKey });
     },
-    onError: (error, __, context) => {
-      console.log(error);
+    onError: (_, __, context) => {
+      if (context === undefined) return;
+
       queryClient.setQueryData(
         todoListQueryKey,
-        context?.prevTodoRecordSnapshot
+        context.prevTodoListRecordSnapshot
       );
+
       window.alert("상태 변경 처리를 실패했습니다. 다시 시도해주세요");
     },
   });

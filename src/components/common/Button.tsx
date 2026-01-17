@@ -6,6 +6,8 @@ type Props = PropsWithChildren<{
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
 
+  full?: boolean;
+
   className?: string;
   onClick?: React.MouseEventHandler<HTMLElement>;
   disabled?: boolean;
@@ -23,18 +25,19 @@ export function Button({
   color,
   leftIcon,
   rightIcon,
+  full = false,
   children,
   className,
   ...rest
 }: Props) {
   return (
-    <div className="relative w-fit">
+    <div className={classNames(full && "w-full", "relative min-w-fit")}>
       <div className="absolute -z-10 w-full h-full top-1 left-[2px] bg-slate-900 rounded-3xl" />
       <button
         className={classNames(
+          className,
           buttonColorMap[color],
-          `relative min-w-[56px] w-max h-[56px] px-[18px] py-[18px] flex gap-1 justify-center items-center border-2 border-slate-900 rounded-3xl font-bold cursor-pointer `,
-          className
+          `relative min-w-[56px] h-[56px] px-[18px] py-[18px] flex gap-1 justify-center items-center border-2 border-slate-900 rounded-3xl font-bold cursor-pointer `
         )}
         {...rest}
       >
