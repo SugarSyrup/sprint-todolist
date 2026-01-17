@@ -1,3 +1,5 @@
+// Todo Form ( Todo 추가 하는 Form )
+
 "use client";
 
 import Image from "next/image";
@@ -10,6 +12,7 @@ export function TodoForm() {
   const [value, setValue] = useState<string>("");
   const { mutate: createTodo } = useCreateTodoMutation();
 
+  // Todo 추가 하는 함수
   function onSubmit() {
     createTodo(value, {
       onSuccess: () => {
@@ -29,6 +32,7 @@ export function TodoForm() {
       }}
     >
       <div className="relative w-full h-[56px]">
+        {/* 입력창 그림자 */}
         <div className="absolute -z-10 w-full h-full top-1 left-[2px] bg-slate-900 rounded-3xl" />
         <input
           className="w-full h-full border-2 border-slate-900 rounded-3xl bg-slate-100 outline-none px-6 placeholder-slate-500 text-[16px] text-slate-900"

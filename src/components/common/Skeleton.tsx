@@ -1,3 +1,5 @@
+// 공통 Skeleton 컴포넌트
+
 import classNames from "classnames";
 
 export function Skeleton({

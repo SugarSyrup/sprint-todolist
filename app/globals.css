@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* 디자인 시안에 따른 컬러 시스템 구현 및 나눔스퀘어 폰트 설정*/
 @theme inline {
   --color-slate-900: #0F172A;
   --color-slate-800: #1E293B;

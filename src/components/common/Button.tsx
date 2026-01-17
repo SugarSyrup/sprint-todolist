@@ -1,3 +1,5 @@
+// 공통 버튼 컴포넌트
+
 import { PropsWithChildren, ReactNode } from "react";
 import classNames from "classnames";
 
