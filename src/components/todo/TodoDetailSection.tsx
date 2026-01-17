@@ -1,14 +1,15 @@
 "use client";
 
 import { QueryBoundary } from "../common/QueryBoudary";
+import { TodoDetail } from "./todoDetail/TodoDetail";
 
 export function TodoDetailSection() {
   return (
     <QueryBoundary
-      loadingFallback={<>loading</>}
-      renderError={(onRetry) => <>error</>}
+      loadingFallback={<TodoDetail.Loading />}
+      renderError={(onRetry) => <TodoDetail.Error onRetry={onRetry} />}
     >
-      <span>Todo Detail</span>
+      <TodoDetail />
     </QueryBoundary>
   );
 }
