@@ -1,8 +1,11 @@
 import Image from "next/image";
+import { useState, useMemo } from "react";
+import isEqual from "lodash.isequal";
 
 import { useTodoDetailQuery } from "@/src/features/todo/hooks/useTodoDetailQuery";
 import { useTodoId } from "@/src/features/todo/hooks/useTodoId";
 import { Button } from "@/src/components/common/Button";
+import { TodoDetail as TodoDetailType } from "@/src/features/todo/model/todo.model";
 
 import { Loading } from "./Loading";
 import { Error } from "./Error";
@@ -12,10 +15,20 @@ export function TodoDetail() {
   const id = useTodoId();
   const { data: todoDetailSnapshot } = useTodoDetailQuery(id);
 
+  const [form, setForm] = useState<TodoDetailType>(todoDetailSnapshot);
+
+  const isDirty = useMemo(() => {
+    if (form === null) return false;
+    return !isEqual(todoDetailSnapshot, form);
+  }, [form]);
+
   return (
     <div className="w-full grid grid-cols-1 gap-4 lg:grid-cols-2">
       <div className="lg:col-span-2">
-        <Name {...todoDetailSnapshot} />
+        <Name
+          {...todoDetailSnapshot}
+          setName={(name) => setForm((prev) => ({ ...prev, name: name }))}
+        />
       </div>
 
       <div className="w-full h-[311px] rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50 flex justify-center items-center"></div>
@@ -33,7 +46,9 @@ export function TodoDetail() {
       <div className="lg:col-span-2 w-full flex justify-center items-center sm:m-auto lg:justify-end">
         <div className="w-full h-inherit flex justify-center items-center gap-[7px] sm:max-w-[352px]">
           <Button
-            color="slate"
+            color={isDirty ? "lime" : "slate"}
+            disabled={!isDirty}
+            onClick={() => {}}
             className="w-full"
             full={true}
             leftIcon={
@@ -47,6 +62,7 @@ export function TodoDetail() {
           >
             수정 완료
           </Button>
+
           <Button
             color="rose"
             className="w-full"

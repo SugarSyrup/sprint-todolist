@@ -8,9 +8,10 @@ interface Props {
   id: TodoDetail["id"];
   name: TodoDetail["name"];
   isCompleted: TodoDetail["isCompleted"];
+  setName: (name: TodoDetail["name"]) => void;
 }
 
-export function Name({ isCompleted, name, id }: Props) {
+export function Name({ isCompleted, name, id, setName }: Props) {
   const { mutate: changeTodoStateMutate } = useChangeTodoStateMutation();
 
   return (
@@ -32,6 +33,9 @@ export function Name({ isCompleted, name, id }: Props) {
 
       <input
         defaultValue={name}
+        onChange={(e) => {
+          setName(e.currentTarget.value);
+        }}
         className="underline font-bold text-xl field-sizing-content outline-0"
         type="text"
         name="name"
