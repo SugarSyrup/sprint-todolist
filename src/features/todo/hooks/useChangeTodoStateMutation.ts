@@ -64,13 +64,15 @@ export function useChangeTodoStateMutation() {
         }
       );
 
-      return { prevTodoListRecordSnapshot, prevTodoDetailSnapshot, id };
+      return { prevTodoListRecordSnapshot, prevTodoDetailSnapshot };
     },
-    onSettled: (_, __, { id }) => {
+    onSettled: (_, __, variables) => {
       queryClient.invalidateQueries({ queryKey: todoListQueryKey });
-      queryClient.invalidateQueries({ queryKey: todoDetailQueryKey(id) });
+      queryClient.invalidateQueries({
+        queryKey: todoDetailQueryKey(variables.id),
+      });
     },
-    onError: (_, __, context) => {
+    onError: (_, variables, context) => {
       if (context === undefined) return;
 
       queryClient.setQueryData(
@@ -79,7 +81,7 @@ export function useChangeTodoStateMutation() {
       );
 
       queryClient.setQueryData(
-        todoDetailQueryKey(context.id),
+        todoDetailQueryKey(variables.id),
         context.prevTodoDetailSnapshot
       );
 

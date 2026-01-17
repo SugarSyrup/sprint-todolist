@@ -11,7 +11,7 @@ interface Props {
   setName: (name: TodoDetail["name"]) => void;
 }
 
-export function Name({ isCompleted, name, id, setName }: Props) {
+export function NameNState({ isCompleted, name, id, setName }: Props) {
   const { mutate: changeTodoStateMutate } = useChangeTodoStateMutation();
 
   return (

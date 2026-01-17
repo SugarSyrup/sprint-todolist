@@ -1,35 +1,55 @@
 import Image from "next/image";
 import { useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import isEqual from "lodash.isequal";
 
 import { useTodoDetailQuery } from "@/src/features/todo/hooks/useTodoDetailQuery";
 import { useTodoId } from "@/src/features/todo/hooks/useTodoId";
+import { useUpdateTodoMutation } from "@/src/features/todo/hooks/useUpdateTodoMutation";
 import { Button } from "@/src/components/common/Button";
 import { TodoDetail as TodoDetailType } from "@/src/features/todo/model/todo.model";
+import { deleteTodo } from "@/src/features/todo/api/todo.api";
 
 import { Loading } from "./Loading";
 import { Error } from "./Error";
-import { Name } from "./Name";
+import { NameNState } from "./NameNState";
 import { ImageInput } from "./ImageInput";
 import { Memo } from "./Memo";
 
 export function TodoDetail() {
   const id = useTodoId();
+  const router = useRouter();
+
   const { data: todoDetailSnapshot } = useTodoDetailQuery(id);
 
   const [form, setForm] = useState<TodoDetailType>(todoDetailSnapshot);
+  const { mutate: updateTodoMutate, isPending } = useUpdateTodoMutation();
 
   const isDirty = useMemo(() => {
     if (form === null) return false;
     return !isEqual(todoDetailSnapshot, form);
   }, [form, todoDetailSnapshot]);
 
+  const handleUpdate = () => {
+    if (!isDirty || !form) return;
+
+    updateTodoMutate({
+      id: form.id,
+      name: form.name,
+      memo: form.memo ?? "",
+      imageUrl: form.imageUrl ?? "",
+      isCompleted: form.isCompleted,
+    });
+  };
+
+  const handleDelete = () => {};
+
   return (
     <div className="w-full grid grid-cols-1 gap-4 lg:grid-cols-2">
       <div className="lg:col-span-2">
-        <Name
+        <NameNState
           name={form.name}
-          isCompleted={form.isCompleted}
+          isCompleted={todoDetailSnapshot.isCompleted}
           id={form.id}
           setName={(name) => setForm((prev) => ({ ...prev, name: name }))}
         />
@@ -49,8 +69,8 @@ export function TodoDetail() {
         <div className="w-full h-inherit flex justify-center items-center gap-[7px] sm:max-w-[352px]">
           <Button
             color={isDirty ? "lime" : "slate"}
-            disabled={!isDirty}
-            onClick={() => {}}
+            disabled={!isDirty || isPending}
+            onClick={handleUpdate}
             className="w-full"
             full={true}
             leftIcon={
@@ -69,6 +89,7 @@ export function TodoDetail() {
             color="rose"
             className="w-full"
             full={true}
+            onClick={handleDelete}
             leftIcon={
               <Image
                 src="/icons/x-white.svg"
