@@ -2,18 +2,21 @@ import Image from "next/image";
 import classNames from "classnames";
 
 import { TodoDetail } from "@/src/features/todo/model/todo.model";
-import { useChangeTodoStateMutation } from "@/src/features/todo/hooks/useChangeTodoStateMutation";
 
 interface Props {
   id: TodoDetail["id"];
   name: TodoDetail["name"];
   isCompleted: TodoDetail["isCompleted"];
   setName: (name: TodoDetail["name"]) => void;
+  setIsCompleted: (isCompleted: TodoDetail["isCompleted"]) => void;
 }
 
-export function NameNState({ isCompleted, name, id, setName }: Props) {
-  const { mutate: changeTodoStateMutate } = useChangeTodoStateMutation();
-
+export function NameNState({
+  isCompleted,
+  name,
+  setName,
+  setIsCompleted,
+}: Props) {
   return (
     <div
       className={classNames(
@@ -27,7 +30,7 @@ export function NameNState({ isCompleted, name, id, setName }: Props) {
         width="32"
         height="32"
         onClick={() => {
-          changeTodoStateMutate({ id, isCompleted: !isCompleted });
+          setIsCompleted(!isCompleted);
         }}
       />
 

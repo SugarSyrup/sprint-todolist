@@ -35,7 +35,7 @@ export function useUpdateTodoMutation() {
 
       return { prevTodoListRecordSnapshot, prevTodoDetailSnapshot };
     },
-    onSuccess: (_, variables) => {
+    onSettled: (_, __, variables) => {
       queryClient.invalidateQueries({ queryKey: todoListQueryKey });
       queryClient.invalidateQueries({
         queryKey: todoDetailQueryKey(variables.id),

@@ -35,13 +35,20 @@ export function TodoDetail() {
   const handleUpdate = () => {
     if (!isDirty || !form) return;
 
-    updateTodoMutate({
-      id: form.id,
-      name: form.name,
-      memo: form.memo ?? "",
-      imageUrl: form.imageUrl ?? "",
-      isCompleted: form.isCompleted,
-    });
+    updateTodoMutate(
+      {
+        id: form.id,
+        name: form.name,
+        memo: form.memo ?? "",
+        imageUrl: form.imageUrl ?? "",
+        isCompleted: form.isCompleted,
+      },
+      {
+        onSuccess: () => {
+          router.back();
+        },
+      }
+    );
   };
 
   const handleDelete = () => {
@@ -57,9 +64,12 @@ export function TodoDetail() {
       <div className="lg:col-span-2">
         <NameNState
           name={form.name}
-          isCompleted={todoDetailSnapshot.isCompleted}
+          isCompleted={form.isCompleted}
           id={form.id}
           setName={(name) => setForm((prev) => ({ ...prev, name: name }))}
+          setIsCompleted={(isCompleted) =>
+            setForm((prev) => ({ ...prev, isCompleted: isCompleted }))
+          }
         />
       </div>
 
