@@ -6,6 +6,7 @@ import { changeTodoState } from "../utils/changeTodoState";
 
 import { todoListQueryKey } from "./useTodoListQuery";
 
+// Todo 상태 변경 함수
 export function useChangeTodoStateMutation() {
   const queryClient = useQueryClient();
 
@@ -20,11 +21,14 @@ export function useChangeTodoStateMutation() {
       return updateTodo({ id, isCompleted });
     },
     onMutate: async ({ id, isCompleted }) => {
+      // Todo 상태 변경 중 데이터 캐시 무효화
       await queryClient.cancelQueries({ queryKey: todoListQueryKey });
 
+      // 이전 Todo 목록 데이터 캐시 저장
       const prevTodoListRecordSnapshot =
         queryClient.getQueryData(todoListQueryKey);
 
+      // 이전 Todo 목록 데이터 캐시 업데이트
       queryClient.setQueryData(
         todoListQueryKey,
         (prevTodoRecord: Record<TodoType, Todo[]> | undefined) => {
@@ -48,11 +52,14 @@ export function useChangeTodoStateMutation() {
         }
       );
 
+      // 이전 Todo 목록 데이터 캐시 반환
       return { prevTodoListRecordSnapshot };
     },
+    // Todo 상태 변경 중 데이터 캐시 무효화 후 데이터 캐시 업데이트
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: todoListQueryKey });
     },
+    // Todo 상태 변경 중 에러 발생 시 이전 Todo 목록 데이터 캐시 복원
     onError: (_, __, context) => {
       if (context === undefined) return;
 

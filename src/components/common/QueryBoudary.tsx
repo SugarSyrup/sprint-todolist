@@ -1,3 +1,5 @@
+// children에서 시행되는 Suspense와 Error에 대한 책임 분리 ( 컴포넌트 단위 )
+
 "use client";
 
 import { ErrorBoundary } from "react-error-boundary";

@@ -1,3 +1,5 @@
+// Global Navigation Bar
+
 "use client";
 
 export function GNB() {

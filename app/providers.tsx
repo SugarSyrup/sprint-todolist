@@ -1,3 +1,5 @@
+// TanStack Query Provider
+
 "use client";
 
 import { ReactNode } from "react";
@@ -21,9 +23,11 @@ function makeQueryClient() {
 let browserQueryClient: QueryClient | undefined = undefined;
 
 function getQueryClient() {
+  // Server Component인 경우 새로운 QueryClient 인스턴스 생성
   if (isServer) {
     return makeQueryClient();
   } else {
+    // Client Component인 경우 기존 QueryClient 인스턴스 반환 또는 생성
     if (!browserQueryClient) browserQueryClient = makeQueryClient();
     return browserQueryClient;
   }

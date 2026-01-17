@@ -18,28 +18,30 @@ export function ImageInput({ imageUrl, setImageUrl }: Props) {
   const [isUploading, setIsUploading] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 이미지 업로드 중일 때 상태 변경 > 로딩 UI
     setIsUploading(true);
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // 이미지 파일만 업로드 가능
     if (!file.type.startsWith("image/")) {
       alert("이미지 파일만 업로드 가능합니다.");
       setIsUploading(false);
       return;
     }
 
+    // 파일 크기는 5MB 이하
     if (file.size > 5 * 1024 * 1024) {
       alert("파일 크기는 5MB 이하여야 합니다.");
       setIsUploading(false);
       return;
     }
 
+    // 파일 이름은 영어 만
     const fileName = file.name;
-    const englishOnlyRegex = /^[a-zA-Z0-9._-]+$/;
+    const englishOnlyRegex = /^[a-zA-Z.]+$/;
     if (!englishOnlyRegex.test(fileName)) {
-      alert(
-        "파일 이름은 영어, 숫자, 점(.), 하이픈(-), 언더스코어(_)만 사용 가능합니다."
-      );
+      alert("파일 이름은 영어 만 사용 가능합니다.");
       setIsUploading(false);
       return;
     }
@@ -57,10 +59,12 @@ export function ImageInput({ imageUrl, setImageUrl }: Props) {
       });
   };
 
+  // 이미지 업로드 버튼 클릭 시 파일 입력 요소 클릭
   const handleClick = () => {
     fileInputRef.current?.click();
   };
 
+  // 이미지 업로딩 중일 때 로딩 UI
   if (isUploading) {
     return (
       <div className="w-full h-[311px] rounded-3xl border-2 border-slate-300 bg-slate-50 flex justify-center items-center relative">
@@ -91,6 +95,7 @@ export function ImageInput({ imageUrl, setImageUrl }: Props) {
         className="hidden"
       />
 
+      {/* 이미지 있을 때/없을 때 UI */}
       {imageUrl ? (
         <div className="w-full h-full relative rounded-3xl overflow-hidden">
           <Image
