@@ -49,37 +49,39 @@ export function TodoDetail() {
         />
       </div>
 
-      <div className="lg:col-span-2 w-full h-inherit flex justify-center items-center gap-[7px]">
-        <Button
-          color="slate"
-          className="w-full"
-          full={true}
-          leftIcon={
-            <Image
-              src="/icons/check-slate.svg"
-              alt="check-icon"
-              width={16}
-              height={16}
-            />
-          }
-        >
-          수정 완료
-        </Button>
-        <Button
-          color="rose"
-          className="w-full"
-          full={true}
-          leftIcon={
-            <Image
-              src="/icons/x-white.svg"
-              alt="check-icon"
-              width={16}
-              height={16}
-            />
-          }
-        >
-          삭제 하기
-        </Button>
+      <div className="lg:col-span-2 w-full flex justify-center items-center sm:m-auto lg:justify-end">
+        <div className="w-full h-inherit flex justify-center items-center gap-[7px] sm:max-w-[352px]">
+          <Button
+            color="slate"
+            className="w-full"
+            full={true}
+            leftIcon={
+              <Image
+                src="/icons/check-slate.svg"
+                alt="check-icon"
+                width={16}
+                height={16}
+              />
+            }
+          >
+            수정 완료
+          </Button>
+          <Button
+            color="rose"
+            className="w-full"
+            full={true}
+            leftIcon={
+              <Image
+                src="/icons/x-white.svg"
+                alt="check-icon"
+                width={16}
+                height={16}
+              />
+            }
+          >
+            삭제 하기
+          </Button>
+        </div>
       </div>
     </div>
   );
