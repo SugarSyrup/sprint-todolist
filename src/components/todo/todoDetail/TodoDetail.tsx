@@ -10,6 +10,7 @@ import { TodoDetail as TodoDetailType } from "@/src/features/todo/model/todo.mod
 import { Loading } from "./Loading";
 import { Error } from "./Error";
 import { Name } from "./Name";
+import { ImageInput } from "./ImageInput";
 
 export function TodoDetail() {
   const id = useTodoId();
@@ -20,18 +21,23 @@ export function TodoDetail() {
   const isDirty = useMemo(() => {
     if (form === null) return false;
     return !isEqual(todoDetailSnapshot, form);
-  }, [form]);
+  }, [form, todoDetailSnapshot]);
 
   return (
     <div className="w-full grid grid-cols-1 gap-4 lg:grid-cols-2">
       <div className="lg:col-span-2">
         <Name
-          {...todoDetailSnapshot}
+          name={form.name}
+          isCompleted={form.isCompleted}
+          id={form.id}
           setName={(name) => setForm((prev) => ({ ...prev, name: name }))}
         />
       </div>
 
-      <div className="w-full h-[311px] rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50 flex justify-center items-center"></div>
+      <ImageInput
+        imageUrl={form.imageUrl}
+        setImageUrl={(imageUrl) => setForm((prev) => ({ ...prev, imageUrl }))}
+      />
 
       <div className="bg-[url('/imgs/memo.png')] h-[311px] bg-cover relative flex flex-col items-center justify-center py-[24px] px-[12px] rounded-3xl">
         <span className="text-amber-800 text-center font-extrabold text-[16px] absolute top-6">
