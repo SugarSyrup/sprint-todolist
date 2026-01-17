@@ -14,7 +14,7 @@ const nanumsquare = localFont({
       style: "normal",
     },
     {
-      path: "../public/fonts/NanumSquarEB.woff2",
+      path: "../public/fonts/NanumSquareEB.woff2",
       weight: "800",
       style: "normal",
     },
