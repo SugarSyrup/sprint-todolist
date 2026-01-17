@@ -11,6 +11,7 @@ import { Loading } from "./Loading";
 import { Error } from "./Error";
 import { Name } from "./Name";
 import { ImageInput } from "./ImageInput";
+import { Memo } from "./Memo";
 
 export function TodoDetail() {
   const id = useTodoId();
@@ -39,15 +40,10 @@ export function TodoDetail() {
         setImageUrl={(imageUrl) => setForm((prev) => ({ ...prev, imageUrl }))}
       />
 
-      <div className="bg-[url('/imgs/memo.png')] h-[311px] bg-cover relative flex flex-col items-center justify-center py-[24px] px-[12px] rounded-3xl">
-        <span className="text-amber-800 text-center font-extrabold text-[16px] absolute top-6">
-          Memo
-        </span>
-        <textarea
-          defaultValue={todoDetailSnapshot.memo}
-          className="outline-0 resize-none w-full h-[200px] text-center overflow-hidden pt-[32px]"
-        />
-      </div>
+      <Memo
+        memo={form.memo}
+        setMemo={(memo) => setForm((prev) => ({ ...prev, memo }))}
+      />
 
       <div className="lg:col-span-2 w-full flex justify-center items-center sm:m-auto lg:justify-end">
         <div className="w-full h-inherit flex justify-center items-center gap-[7px] sm:max-w-[352px]">
