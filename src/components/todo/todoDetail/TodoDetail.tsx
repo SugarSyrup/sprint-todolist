@@ -6,9 +6,9 @@ import isEqual from "lodash.isequal";
 import { useTodoDetailQuery } from "@/src/features/todo/hooks/useTodoDetailQuery";
 import { useTodoId } from "@/src/features/todo/hooks/useTodoId";
 import { useUpdateTodoMutation } from "@/src/features/todo/hooks/useUpdateTodoMutation";
+import { useDeleteTodoMutation } from "@/src/features/todo/hooks/useDeleteTodoMutation";
 import { Button } from "@/src/components/common/Button";
 import { TodoDetail as TodoDetailType } from "@/src/features/todo/model/todo.model";
-import { deleteTodo } from "@/src/features/todo/api/todo.api";
 
 import { Loading } from "./Loading";
 import { Error } from "./Error";
@@ -24,6 +24,8 @@ export function TodoDetail() {
 
   const [form, setForm] = useState<TodoDetailType>(todoDetailSnapshot);
   const { mutate: updateTodoMutate, isPending } = useUpdateTodoMutation();
+  const { mutate: deleteTodoMutate, isPending: isDeleting } =
+    useDeleteTodoMutation();
 
   const isDirty = useMemo(() => {
     if (form === null) return false;
@@ -42,7 +44,13 @@ export function TodoDetail() {
     });
   };
 
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    deleteTodoMutate(id, {
+      onSuccess: () => {
+        router.replace("/");
+      },
+    });
+  };
 
   return (
     <div className="w-full grid grid-cols-1 gap-4 lg:grid-cols-2">
@@ -89,6 +97,7 @@ export function TodoDetail() {
             color="rose"
             className="w-full"
             full={true}
+            disabled={isDeleting}
             onClick={handleDelete}
             leftIcon={
               <Image
