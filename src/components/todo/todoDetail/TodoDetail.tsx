@@ -3,38 +3,19 @@ import Image from "next/image";
 import { useTodoDetailQuery } from "@/src/features/todo/hooks/useTodoDetailQuery";
 import { useTodoId } from "@/src/features/todo/hooks/useTodoId";
 import { Button } from "@/src/components/common/Button";
-import { useChangeTodoStateMutation } from "@/src/features/todo/hooks/useChangeTodoStateMutation";
 
 import { Loading } from "./Loading";
 import { Error } from "./Error";
+import { Name } from "./Name";
 
 export function TodoDetail() {
   const id = useTodoId();
-  const {
-    data: { isCompleted, name, memo },
-  } = useTodoDetailQuery(id);
-
-  const { mutate: changeTodoStateMutate } = useChangeTodoStateMutation();
+  const { data: todoDetailSnapshot } = useTodoDetailQuery(id);
 
   return (
     <div className="w-full grid grid-cols-1 gap-4 lg:grid-cols-2">
-      <div className="lg:col-span-2 w-full h-[64px] rounded-3xl border-2 border-slate-900 bg-white flex justify-center items-center gap-4">
-        <Image
-          src={isCompleted ? "/icons/checked.svg" : "/icons/unchecked.svg"}
-          alt="todolist-item-check-icon"
-          width="32"
-          height="32"
-          onClick={() => {
-            changeTodoStateMutate({ id, isCompleted: !isCompleted });
-          }}
-        />
-
-        <input
-          defaultValue={name}
-          className="underline font-bold text-xl field-sizing-content outline-0"
-          type="text"
-          name="name"
-        />
+      <div className="lg:col-span-2">
+        <Name {...todoDetailSnapshot} />
       </div>
 
       <div className="w-full h-[311px] rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50 flex justify-center items-center"></div>
@@ -44,7 +25,7 @@ export function TodoDetail() {
           Memo
         </span>
         <textarea
-          defaultValue={memo}
+          defaultValue={todoDetailSnapshot.memo}
           className="outline-0 resize-none w-full h-[200px] text-center overflow-hidden pt-[32px]"
         />
       </div>
