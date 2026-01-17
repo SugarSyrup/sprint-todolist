@@ -4,6 +4,7 @@ import { Todo, TodoDetail, updateTodoRequest } from "../model/todo.model";
 import { todoListQueryKey } from "./useTodoListQuery";
 import { todoDetailQueryKey } from "./useTodoDetailQuery";
 
+// Todo 수정 함수
 export function useUpdateTodoMutation() {
   const queryClient = useQueryClient();
 
@@ -17,14 +18,20 @@ export function useUpdateTodoMutation() {
       return updateTodo({ id, ...rest });
     },
     onMutate: async ({ id, ...rest }) => {
+      // Todo 수정 중 데이터 캐시 무효화
       await queryClient.cancelQueries({ queryKey: todoListQueryKey });
       await queryClient.cancelQueries({ queryKey: todoDetailQueryKey(id) });
 
+      // 이전 Todo 목록 데이터 캐시 백업
       const prevTodoListRecordSnapshot =
         queryClient.getQueryData(todoListQueryKey);
+
+      // 이전 Todo 상세 페이지 데이터 캐시 백업
       const prevTodoDetailSnapshot = queryClient.getQueryData(
         todoDetailQueryKey(id)
       );
+
+      // 이전 Todo 상세 페이지 데이터 캐시 업데이트
       queryClient.setQueryData(
         todoDetailQueryKey(id),
         (prevTodoDetail: TodoDetail | undefined) => {
@@ -33,10 +40,14 @@ export function useUpdateTodoMutation() {
         }
       );
 
+      // 이전 Todo 목록 데이터 캐시 반환
       return { prevTodoListRecordSnapshot, prevTodoDetailSnapshot };
     },
     onSettled: (_, __, variables) => {
+      // Todo 수정 중 데이터 캐시 무효화 후 Todo 목록 데이터 캐시 업데이트
       queryClient.invalidateQueries({ queryKey: todoListQueryKey });
+
+      // Todo 수정 중 데이터 캐시 무효화 후 Todo 상세 페이지 데이터 캐시 업데이트
       queryClient.invalidateQueries({
         queryKey: todoDetailQueryKey(variables.id),
       });
@@ -44,6 +55,7 @@ export function useUpdateTodoMutation() {
     onError: (_, variables, context) => {
       if (context === undefined) return;
 
+      // 이전 Todo 목록 데이터 캐시 복원
       if (context.prevTodoListRecordSnapshot) {
         queryClient.setQueryData(
           todoListQueryKey,

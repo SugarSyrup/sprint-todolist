@@ -22,16 +22,20 @@ export function TodoDetail() {
 
   const { data: todoDetailSnapshot } = useTodoDetailQuery(id);
 
+  // Todo에 대한 사용자 입력 값 관리
   const [form, setForm] = useState<TodoDetailType>(todoDetailSnapshot);
+
   const { mutate: updateTodoMutate, isPending } = useUpdateTodoMutation();
   const { mutate: deleteTodoMutate, isPending: isDeleting } =
     useDeleteTodoMutation();
 
+  // 사용자 입력으로 기존 값과 변경 되었는지 확인
   const isDirty = useMemo(() => {
     if (form === null) return false;
     return !isEqual(todoDetailSnapshot, form);
   }, [form, todoDetailSnapshot]);
 
+  // Todo 수정 함수
   const handleUpdate = () => {
     if (!isDirty || !form) return;
 
@@ -45,6 +49,7 @@ export function TodoDetail() {
       },
       {
         onSuccess: () => {
+          // 수정 성공 시 이전 페이지로 이동
           router.back();
         },
       }
@@ -83,6 +88,7 @@ export function TodoDetail() {
         setMemo={(memo) => setForm((prev) => ({ ...prev, memo }))}
       />
 
+      {/* 수정 완료/삭제 버튼 */}
       <div className="lg:col-span-2 w-full flex justify-center items-center sm:m-auto lg:justify-end">
         <div className="w-full h-inherit flex justify-center items-center gap-[7px] sm:max-w-[352px]">
           <Button

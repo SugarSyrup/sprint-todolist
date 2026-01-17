@@ -25,6 +25,7 @@ export function TodoList() {
           height="36"
         />
 
+        {/* 할 일 목록이 비어있을 때 UI */}
         {isTodoStateListEmpty && (
           <div className="w-full h-[40vh] flex justify-center items-center">
             <Empty.TodoList />
@@ -46,6 +47,7 @@ export function TodoList() {
           height="36"
         />
 
+        {/* 다 한 일 목록이 비어있을 때 UI */}
         {isDoneStateListEmpty && (
           <div className="w-full h-[40vh] flex justify-center items-center">
             <Empty.DoneList />

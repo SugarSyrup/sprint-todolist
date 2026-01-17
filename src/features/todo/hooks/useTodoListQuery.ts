@@ -16,6 +16,7 @@ export function useTodoListQuery() {
     },
     retry: 2,
 
+    // Todo 목록 데이터 캐시 유지 시간 ( 30분 ) ( 예민하게 최신화 될 필요 없는 도메인 성격의 데이터 )
     staleTime: 30 * 60 * 1000,
     gcTime: 60 * 60 * 1000,
   });
